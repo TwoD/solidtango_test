@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>PopcornJS and Solidtango</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../popcorn-js/popcorn.js"></script>
+<script src="../popcorn-js/wrappers/common/popcorn._MediaElementProto.js"></script>
+<script src="../popcorn-js/wrappers/youtube/popcorn.HTMLYouTubeVideoElement.js"></script>
+<script src="../popcorn-js/wrappers/solidtango/popcorn.HTMLSolidtangoVideoElement.js"></script>
+<script>
+/* DOM ready "init" */
+$(document).ready(function(){
+
+function log(msg) {
+	$('#output').append('<p>' + msg + '</p>');
+}
+
+//var wrapper = Popcorn.HTMLYouTubeVideoElement('#video'); wrapper.src = 'http://www.youtube.com/watch/?v=nfGV32RNkhw&controls=1';
+var wrapper = Popcorn.HTMLSolidtangoVideoElement('#video'); wrapper.src = 'https://okv.solidtango.com/widgets/embed/rvgy5ai8';
+
+
+var popcorn = Popcorn( wrapper ),
+    count = 0;
+popcorn.autoplay(true);
+
+
+popcorn.on('error', function() {
+	console.log(arguments, 'error');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+
+popcorn.on('abort', function() {
+	console.log(arguments, 'abort');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+
+popcorn.on('ended', function() {
+	console.log(arguments, 'ended');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+
+popcorn.on('loadstart', function() {
+	console.log(arguments, 'loadstart');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+
+popcorn.on('playing', function() {
+	console.log(arguments, 'playing');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+
+popcorn.on('seeked', function() {
+	console.log(arguments, 'seeked');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('timeupdate', function() {
+	//console.log(arguments, 'timeupdate');
+	console.log(this.media.currentTime, 'time');
+	//console.log(this, 'popcorn');
+});
+popcorn.on('volumechange', function() {
+	console.log(arguments, 'volumechange');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('canplay', function() {
+	console.log(arguments, 'canplay');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('durationchange', function() {
+	console.log(arguments, 'durationchange');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('pause', function() {
+	console.log(arguments, 'pause');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('progress', function() {
+	//console.log(arguments, 'progress');
+	//console.log(this, 'popcorn');
+});
+popcorn.on('seeking', function() {
+	console.log(arguments, 'seeking');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('trackend', function() {
+	console.log(arguments, 'trackend');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('waiting', function() {
+	console.log(arguments, 'waiting');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('canplayall', function() {
+	console.log(arguments, 'canplayall');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('emptied', function() {
+	console.log(arguments, 'emptied');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('loadeddata', function() {
+	console.log(arguments, 'loadededata');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('play', function() {
+	console.log(arguments, 'play');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('ratechanged', function() {
+	console.log(arguments, 'ratechanged');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('suspend', function() {
+	console.log(arguments, 'suspend');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+popcorn.on('trackstart', function() {
+	console.log(arguments, 'trackstart');
+	console.log(this.media.currentTime, 'time');
+	console.log(this, 'popcorn');
+});
+
+
+//  an exec block would look like this:
+//  popcorn.exec( 1, function() {
+//   log( "Exec ran" );
+//  });
+
+// cue is almost identical
+
+popcorn.cue( 1, function() {
+  // log count, which is 0 by default
+  log('Count: ' + count );
+  count++;
+});
+
+// Another example with some more functionality included
+
+popcorn.cue( 3, function() {
+  log('Count: ' + count);
+  count++;
+});
+
+popcorn.cue( 10, function() {
+log('seek to 1 on 10');
+this.currentTime(1);
+});
+
+popcorn.cue( 21, function() {
+log('at 21');
+});
+
+// This demo will log our current time at 1 second and seek back to 1 second in the video at
+// 3 seconds and increase our counter
+
+
+});
+</script>
+</head>
+<body>
+<div id="video" style="width: 500px; height: 300px;"></div>
+<div id="output"></div>
+</body>
+</html>
